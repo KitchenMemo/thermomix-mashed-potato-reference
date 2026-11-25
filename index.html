@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thermomix Mashed Potato: Variety &amp; Settings Lookup</title>
+<meta name="description" content="Sortable potato variety lookup for Thermomix mash, plus published cooking settings, a gluey/lumpy/watery troubleshooting table, and storage temperatures.">
+<style>
+  :root{
+    --bg:#fbfaf7; --card:#ffffff; --ink:#1f2328; --muted:#5b6470; --line:#e3dfd6;
+    --accent:#b4690e; --accent-bg:#fff4e0;
+    --best:#1b7f3b; --best-bg:#e3f4e8; --good:#3b6ea8; --good-bg:#e6eef8;
+    --fair:#946200; --fair-bg:#fdf1d6; --poor:#a32d2d; --poor-bg:#fbe7e7;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#16181b; --card:#1e2125; --ink:#e8e8e6; --muted:#9aa3ad; --line:#33383e;
+      --accent:#f0a64a; --accent-bg:#2c2518;
+      --best:#6fd08c; --best-bg:#17301f; --good:#8db8ee; --good-bg:#1a2838;
+      --fair:#e7bb5c; --fair-bg:#33290f; --poor:#f08a8a; --poor-bg:#361a1a;
+    }
+  }
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 16px 48px}
+  header{padding:28px 0 12px}
+  h1{font-size:1.6rem;line-height:1.25;margin:0 0 6px}
+  h2{font-size:1.2rem;margin:36px 0 10px;padding-top:6px;border-top:2px solid var(--line)}
+  h3{font-size:1rem;margin:20px 0 6px}
+  .meta{color:var(--muted);font-size:.9rem;margin:0}
+  .meta a{color:var(--accent)}
+  nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:8px 0;margin-bottom:8px;display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.9rem}
+  nav a{color:var(--ink);text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+  nav a:hover{border-bottom-color:var(--accent)}
+  .callout{background:var(--accent-bg);border-left:4px solid var(--accent);border-radius:6px;padding:12px 16px;margin:12px 0}
+  .callout ul{margin:6px 0 0;padding-left:20px}
+  .callout li{margin:3px 0}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+  .stat b{display:block;font-size:1.25rem}
+  .stat span{color:var(--muted);font-size:.82rem}
+  .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+  .controls input,.controls select,.controls button{font:inherit;font-size:.92rem;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink)}
+  .controls input{flex:1 1 200px;min-width:0}
+  .controls button{cursor:pointer}
+  .count{color:var(--muted);font-size:.85rem;margin:4px 0}
+  .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+  table{border-collapse:collapse;width:100%;font-size:.9rem}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:var(--bg);font-weight:600;white-space:nowrap}
+  tr:last-child td{border-bottom:0}
+  th button{all:unset;cursor:pointer;font-weight:600}
+  th button:hover,th button:focus-visible{text-decoration:underline}
+  th[aria-sort="ascending"] button::after{content:" \25B2";font-size:.7em}
+  th[aria-sort="descending"] button::after{content:" \25BC";font-size:.7em}
+  td.num{white-space:nowrap}
+  .tag{display:inline-block;padding:1px 8px;border-radius:999px;font-size:.8rem;font-weight:600;white-space:nowrap}
+  .t-best{background:var(--best-bg);color:var(--best)}
+  .t-good{background:var(--good-bg);color:var(--good)}
+  .t-fair{background:var(--fair-bg);color:var(--fair)}
+  .t-poor{background:var(--poor-bg);color:var(--poor)}
+  .t-na{background:var(--line);color:var(--muted)}
+  .note{color:var(--muted);font-size:.85rem;margin:8px 0 0}
+  footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+  @media (max-width:560px){h1{font-size:1.35rem} th,td{padding:7px 8px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Thermomix Mashed Potato: Variety &amp; Settings Lookup</h1>
+  <p class="meta">Sortable potato variety table, published Thermomix settings, mash troubleshooting and storage temperatures in one place. Data compiled from and expanded on this guide: <a href="https://kitchenmemo.com/thermomix-mashed-potato/">Thermomix mashed potato method and gluey-mash fixes</a>.</p>
+</header>
+
+<nav aria-label="Sections">
+  <a href="#quick">Quick reference</a>
+  <a href="#varieties">Potato varieties</a>
+  <a href="#settings">Published settings</a>
+  <a href="#fixes">Troubleshooting</a>
+  <a href="#methods">Methods &amp; tools</a>
+  <a href="#storage">Storage</a>
+</nav>
+
+<main>
+
+<section id="quick">
+  <h2>Quick reference</h2>
+  <div class="callout">
+    <strong>Key rules</strong>
+    <ul>
+      <li>Floury potatoes (Russet, Maris Piper, King Edward, Royal Blue) give lighter, fluffier mash; yellow all-purpose potatoes (Yukon Gold) give richer, creamier mash.</li>
+      <li>Weigh the potatoes and cut them into even pieces so they finish cooking together.</li>
+      <li>Cook until completely tender, then finish briefly. Do not extend the mixing time to chase a perfectly smooth look.</li>
+      <li>Butterfly whisk: never above speed 4 (TM6 manual), and attach it correctly before starting.</li>
+      <li>Gluey mash cannot reliably be restored. Repurpose it as a baked potato dish.</li>
+    </ul>
+  </div>
+  <div class="grid">
+    <div class="stat"><b>1,000 g</b><span>Potatoes, 6-portion AU recipe</span></div>
+    <div class="stat"><b>90&deg;C / Sp 1</b><span>Cook, 25&ndash;30 min (+ up to 5)</span></div>
+    <div class="stat"><b>Sp 3 / 30 s</b><span>Butterfly whisk finish</span></div>
+    <div class="stat"><b>2&ndash;3 cm</b><span>Cut size, AU recipe</span></div>
+    <div class="stat"><b>3&ndash;4 days</b><span>Fridge at 40&deg;F (4&deg;C) or below</span></div>
+    <div class="stat"><b>165&deg;F (74&deg;C)</b><span>Reheat internal temperature</span></div>
+  </div>
+</section>
+
+<section id="varieties">
+  <h2>Potato variety lookup for mash</h2>
+  <p class="note" style="margin-top:0">Click a column heading to sort. &ldquo;In guide&rdquo; rows are named in the source guide; &ldquo;Added&rdquo; rows are general culinary classification. Results vary with crop, storage and growing region, so treat the ratings as a starting point.</p>
+
+  <div class="controls">
+    <input id="q" type="search" placeholder="Search variety, note or texture&hellip;" aria-label="Search varieties">
+    <select id="f-region" aria-label="Region">
+      <option value="">All regions</option>
+      <option>US/CA</option>
+      <option>UK</option>
+      <option>AU/NZ</option>
+    </select>
+    <select id="f-type" aria-label="Starch type">
+      <option value="">All starch types</option>
+      <option>Floury</option>
+      <option>All-purpose</option>
+      <option>Waxy</option>
+      <option>Varies</option>
+    </select>
+    <select id="f-fit" aria-label="Mash suitability">
+      <option value="">All suitability</option>
+      <option>Best</option>
+      <option>Good</option>
+      <option>Fair</option>
+      <option>Poor</option>
+    </select>
+    <select id="f-basis" aria-label="Data basis">
+      <option value="">All sources</option>
+      <option>In guide</option>
+      <option>Added</option>
+    </select>
+    <button type="button" id="reset">Reset</button>
+  </div>
+  <p class="count" id="count" aria-live="polite"></p>
+
+  <div class="tablewrap">
+    <table id="varieties-table">
+      <thead>
+        <tr>
+          <th scope="col"><button type="button">Variety</button></th>
+          <th scope="col"><button type="button">Region</button></th>
+          <th scope="col"><button type="button">Starch type</button></th>
+          <th scope="col"><button type="button">Mash suitability</button></th>
+          <th scope="col"><button type="button">Typical mash result</button></th>
+          <th scope="col">Notes</th>
+          <th scope="col"><button type="button">Basis</button></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-region="US/CA" data-type="Floury" data-fit="Best" data-basis="In guide">
+          <td>Russet</td><td>US/CA</td><td>Floury</td>
+          <td data-v="1"><span class="tag t-best">Best</span></td>
+          <td>Light, fluffy</td><td>Named as the good choice for fluffy mash in the US/Canada.</td><td>In guide</td>
+        </tr>
+        <tr data-region="US/CA" data-type="All-purpose" data-fit="Best" data-basis="In guide">
+          <td>Yukon Gold</td><td>US/CA</td><td>All-purpose</td>
+          <td data-v="1"><span class="tag t-best">Best</span></td>
+          <td>Rich, creamy</td><td>Listed as the alternative; a texture preference rather than a ranking against Russet.</td><td>In guide</td>
+        </tr>
+        <tr data-region="US/CA" data-type="Waxy" data-fit="Poor" data-basis="In guide">
+          <td>Waxy red potatoes</td><td>US/CA</td><td>Waxy</td>
+          <td data-v="4"><span class="tag t-poor">Poor</span></td>
+          <td>Denser, holds shape</td><td>Less suitable for fluffy mash.</td><td>In guide</td>
+        </tr>
+        <tr data-region="US/CA" data-type="Floury" data-fit="Good" data-basis="Added">
+          <td>Russet Norkotah</td><td>US/CA</td><td>Floury</td>
+          <td data-v="2"><span class="tag t-good">Good</span></td>
+          <td>Fairly light</td><td>Russet-type; expect slightly less fluffy than Burbank-type Russets.</td><td>Added</td>
+        </tr>
+        <tr data-region="US/CA" data-type="All-purpose" data-fit="Good" data-basis="Added">
+          <td>Kennebec</td><td>US/CA</td><td>All-purpose</td>
+          <td data-v="2"><span class="tag t-good">Good</span></td>
+          <td>Medium, fairly smooth</td><td>Round white; a middle-of-the-road mashing option.</td><td>Added</td>
+        </tr>
+        <tr data-region="US/CA" data-type="Waxy" data-fit="Poor" data-basis="Added">
+          <td>Fingerling types</td><td>US/CA</td><td>Waxy</td>
+          <td data-v="4"><span class="tag t-poor">Poor</span></td>
+          <td>Dense, firm</td><td>Better roasted or boiled whole than mashed.</td><td>Added</td>
+        </tr>
+        <tr data-region="US/CA" data-type="Varies" data-fit="Fair" data-basis="Added">
+          <td>Purple / blue-fleshed</td><td>US/CA</td><td>Varies</td>
+          <td data-v="3"><span class="tag t-fair">Fair</span></td>
+          <td>Varies by cultivar</td><td>Texture depends on cultivar; mash keeps a strong colour.</td><td>Added</td>
+        </tr>
+
+        <tr data-region="UK" data-type="Floury" data-fit="Best" data-basis="In guide">
+          <td>Maris Piper</td><td>UK</td><td>Floury</td>
+          <td data-v="1"><span class="tag t-best">Best</span></td>
+          <td>Light, fluffy</td><td>Named as a good UK choice; also cited in the guide FAQ as a floury example.</td><td>In guide</td>
+        </tr>
+        <tr data-region="UK" data-type="Floury" data-fit="Best" data-basis="In guide">
+          <td>King Edward</td><td>UK</td><td>Floury</td>
+          <td data-v="1"><span class="tag t-best">Best</span></td>
+          <td>Light, fluffy</td><td>Named as a good UK choice.</td><td>In guide</td>
+        </tr>
+        <tr data-region="UK,AU/NZ" data-type="All-purpose" data-fit="Good" data-basis="In guide">
+          <td>Desiree</td><td>UK, AU/NZ</td><td>All-purpose</td>
+          <td data-v="2"><span class="tag t-good">Good</span></td>
+          <td>Medium, creamier</td><td>Listed as the alternative in both the UK and AU/NZ; named in Thermomix AU recipes.</td><td>In guide</td>
+        </tr>
+        <tr data-region="UK" data-type="Waxy" data-fit="Poor" data-basis="In guide">
+          <td>Maris Peer</td><td>UK</td><td>Waxy</td>
+          <td data-v="4"><span class="tag t-poor">Poor</span></td>
+          <td>Dense, firm</td><td>Salad potato; less suitable for fluffy mash.</td><td>In guide</td>
+        </tr>
+        <tr data-region="UK" data-type="Waxy" data-fit="Poor" data-basis="In guide">
+          <td>New potatoes (e.g. Jersey Royal)</td><td>UK</td><td>Waxy</td>
+          <td data-v="4"><span class="tag t-poor">Poor</span></td>
+          <td>Firm, holds structure</td><td>The guide notes new potatoes retain cell structure more strongly than mature floury potatoes. Jersey Royal is an added example.</td><td>In guide</td>
+        </tr>
+        <tr data-region="UK" data-type="All-purpose" data-fit="Good" data-basis="Added">
+          <td>Rooster</td><td>UK</td><td>All-purpose</td>
+          <td data-v="2"><span class="tag t-good">Good</span></td>
+          <td>Fairly fluffy</td><td>Red-skinned; leans floury when mature.</td><td>Added</td>
+        </tr>
+        <tr data-region="UK" data-type="All-purpose" data-fit="Good" data-basis="Added">
+          <td>Estima</td><td>UK</td><td>All-purpose</td>
+          <td data-v="2"><span class="tag t-good">Good</span></td>
+          <td>Medium, smooth</td><td>Versatile maincrop-style potato.</td><td>Added</td>
+        </tr>
+        <tr data-region="UK" data-type="Waxy" data-fit="Poor" data-basis="Added">
+          <td>Charlotte</td><td>UK</td><td>Waxy</td>
+          <td data-v="4"><span class="tag t-poor">Poor</span></td>
+          <td>Dense, firm</td><td>Salad potato; best boiled or in salads.</td><td>Added</td>
+        </tr>
+
+        <tr data-region="AU/NZ" data-type="Floury" data-fit="Best" data-basis="In guide">
+          <td>Royal Blue</td><td>AU/NZ</td><td>Floury</td>
+          <td data-v="1"><span class="tag t-best">Best</span></td>
+          <td>Light, fluffy</td><td>Named in Thermomix AU/NZ published recipes.</td><td>In guide</td>
+        </tr>
+        <tr data-region="AU/NZ" data-type="All-purpose" data-fit="Good" data-basis="In guide">
+          <td>Red Pontiac</td><td>AU/NZ</td><td>All-purpose</td>
+          <td data-v="2"><span class="tag t-good">Good</span></td>
+          <td>Medium, creamier</td><td>Named in Thermomix AU/NZ recipes; starch classification varies by source.</td><td>In guide</td>
+        </tr>
+        <tr data-region="AU/NZ" data-type="Waxy" data-fit="Poor" data-basis="In guide">
+          <td>Very waxy salad varieties</td><td>AU/NZ</td><td>Waxy</td>
+          <td data-v="4"><span class="tag t-poor">Poor</span></td>
+          <td>Dense, firm</td><td>Listed as less suitable for fluffy mash.</td><td>In guide</td>
+        </tr>
+        <tr data-region="AU/NZ" data-type="All-purpose" data-fit="Good" data-basis="Added">
+          <td>Sebago</td><td>AU/NZ</td><td>All-purpose</td>
+          <td data-v="2"><span class="tag t-good">Good</span></td>
+          <td>Medium, smooth</td><td>Common Australian all-rounder.</td><td>Added</td>
+        </tr>
+        <tr data-region="AU/NZ" data-type="All-purpose" data-fit="Good" data-basis="Added">
+          <td>Coliban</td><td>AU/NZ</td><td>All-purpose</td>
+          <td data-v="2"><span class="tag t-good">Good</span></td>
+          <td>Medium, fairly fluffy</td><td>Common Australian all-rounder.</td><td>Added</td>
+        </tr>
+        <tr data-region="AU/NZ" data-type="All-purpose" data-fit="Good" data-basis="Added">
+          <td>Dutch Cream</td><td>AU/NZ</td><td>All-purpose</td>
+          <td data-v="2"><span class="tag t-good">Good</span></td>
+          <td>Creamy</td><td>Yellow-fleshed; similar spirit to Yukon Gold.</td><td>Added</td>
+        </tr>
+        <tr data-region="AU/NZ" data-type="Waxy" data-fit="Fair" data-basis="Added">
+          <td>Nicola</td><td>AU/NZ</td><td>Waxy</td>
+          <td data-v="3"><span class="tag t-fair">Fair</span></td>
+          <td>Firmer, denser</td><td>Holds shape; mashes denser than all-purpose types.</td><td>Added</td>
+        </tr>
+        <tr data-region="AU/NZ" data-type="Waxy" data-fit="Poor" data-basis="Added">
+          <td>Kipfler</td><td>AU/NZ</td><td>Waxy</td>
+          <td data-v="4"><span class="tag t-poor">Poor</span></td>
+          <td>Dense, firm</td><td>Fingerling-style; better roasted or boiled.</td><td>Added</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Suitability here means suitability for a smooth Thermomix-style mash. &ldquo;Best&rdquo; for floury types means fluffy; &ldquo;Best&rdquo; for yellow all-purpose types means creamy. These are texture preferences, not a universal ranking.</p>
+</section>
+
+<section id="settings">
+  <h2>Published Thermomix settings</h2>
+  <p class="note" style="margin-top:0">Two separate official recipes. They use different ingredient balances and are not proportional scalings of each other. Do not mix quantities between them.</p>
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th scope="col">Parameter</th><th scope="col">AU recipe (6 portions)</th><th scope="col">Cookidoo recipe (2 portions)</th><th scope="col">4 portions</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Peeled potatoes</th><td>1,000 g (2.2 lb)</td><td>500 g</td><td>No verified formula</td></tr>
+        <tr><th scope="row">Cut size</th><td>2&ndash;3 cm pieces</td><td>0.5 cm slices</td><td>&mdash;</td></tr>
+        <tr><th scope="row">Milk</th><td>110 g (about 7 tbsp + 1 tsp)</td><td>180 g</td><td>No verified formula</td></tr>
+        <tr><th scope="row">Water</th><td>60 g (&frac14; cup)</td><td>Not listed</td><td>No verified formula</td></tr>
+        <tr><th scope="row">Butter</th><td>30 g (about 2 tbsp + 1 tsp)</td><td>15 g</td><td>No verified formula</td></tr>
+        <tr><th scope="row">Salt</th><td>1 tsp</td><td>&frac12; tsp</td><td>No verified formula</td></tr>
+        <tr><th scope="row">Optional seasoning</th><td>&frac14; tsp ground white pepper</td><td>Pinch of nutmeg</td><td>&mdash;</td></tr>
+        <tr><th scope="row">Cook</th><td>25&ndash;30 min, 90&deg;C (194&deg;F), speed 1; up to 5 min more depending on variety</td><td>Not listed here</td><td>&mdash;</td></tr>
+        <tr><th scope="row">Finish</th><td>Butterfly whisk, speed 3, 30 sec, butter added</td><td>Not listed here</td><td>&mdash;</td></tr>
+        <tr><th scope="row">Time</th><td>25 min active, 40 min total</td><td>Not listed here</td><td>&mdash;</td></tr>
+        <tr><th scope="row">Compatible models</th><td>TM31, TM5, TM6</td><td>TM31, TM5, TM6</td><td>&mdash;</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Always follow the manual for your own model. The TM6 manual specifies the butterfly whisk must never exceed speed 4.</p>
+
+  <h3>Finishing-stage lookup</h3>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th scope="col">Setting</th><th scope="col">Published time</th><th scope="col">Status</th></tr></thead>
+      <tbody>
+        <tr><td>Speed 3, butterfly whisk</td><td>30 seconds</td><td><span class="tag t-best">Official recipe</span></td></tr>
+        <tr><td>Longer mixing</td><td>Not specified</td><td><span class="tag t-na">No tested threshold</span></td></tr>
+        <tr><td>Higher-speed finishing</td><td>Not recommended as an untested adjustment</td><td><span class="tag t-na">No tested threshold</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">The 30-second finish is a recipe setting, not a proven universal point at which mash turns gluey. Practical stop cue: a uniform mash with no visible large pieces.</p>
+</section>
+
+<section id="fixes">
+  <h2>Troubleshooting lookup</h2>
+  <div class="controls">
+    <input id="fix-q" type="search" placeholder="Type a symptom, e.g. sticky, runny, lumps&hellip;" aria-label="Search troubleshooting">
+  </div>
+  <p class="count" id="fix-count" aria-live="polite"></p>
+  <div class="tablewrap">
+    <table id="fixes-table">
+      <thead>
+        <tr><th scope="col">Symptom</th><th scope="col">What you notice</th><th scope="col">Likely cause</th><th scope="col">First correction</th><th scope="col">Prevention</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Gluey</th><td>Sticky, elastic, pasty</td><td>Excessive processing damaging potato structure</td><td>Stop mixing. Repurpose as a baked potato dish; extra milk or butter will not reliably restore fluffiness.</td><td>Mash briefly; do not extend mixing time</td></tr>
+        <tr><th scope="row">Lumpy</th><td>Firm pieces throughout</td><td>Uneven cooking or insufficient mashing</td><td>Check tenderness, then use a manual masher or ricer</td><td>Cut evenly; weigh potatoes</td></tr>
+        <tr><th scope="row">Watery</th><td>Loose, runny</td><td>Too much cooking liquid</td><td>Transfer to a pan and reduce gently, or add cooked, drained potato</td><td>Measure liquid</td></tr>
+        <tr><th scope="row">Dense</th><td>Heavy, compact</td><td>Potato variety or excessive working</td><td>No tested rescue in the guide</td><td>Choose a floury or yellow all-purpose variety; shorten finishing</td></tr>
+        <tr><th scope="row">Bland</th><td>Flat flavour</td><td>Insufficient seasoning</td><td>Adjust salt and pepper gradually</td><td>Season and taste</td></tr>
+        <tr><th scope="row">Too stiff or cold</th><td>Firm, tight texture</td><td>Excess cooling or too little moisture</td><td>Fold in a little warm milk or butter</td><td>Serve promptly</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">These are practical options, not results of a controlled rescue comparison.</p>
+</section>
+
+<section id="methods">
+  <h2>Cooking methods and tools compared</h2>
+
+  <h3>Cooking liquid</h3>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th scope="col">Method</th><th scope="col">Texture</th><th scope="col">Flavour</th><th scope="col">Watch for</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Water, then drain</th><td>Easier to control final moisture</td><td>Neutral</td><td>Drain thoroughly</td></tr>
+        <tr><th scope="row">Milk and water in the bowl</th><td>Depends on the recipe&rsquo;s liquid ratio</td><td>Richer</td><td>Avoid excess liquid</td></tr>
+        <tr><th scope="row">Stock</th><td>Depends on stock and method</td><td>More savoury</td><td>Salt content</td></tr>
+        <tr><th scope="row">Steam (Varoma or basket)</th><td>Potatoes not immersed in liquid</td><td>Concentrated potato flavour</td><td>Needs its own time and quantity testing</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Thermomix vs ricer vs masher</h3>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th scope="col">Tool</th><th scope="col">Texture</th><th scope="col">Hands-on effort</th><th scope="col">Gluey risk</th><th scope="col">Best for</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Thermomix</th><td>Smooth when carefully processed</td><td>Low</td><td>Needs careful timing</td><td>Convenience</td></tr>
+        <tr><th scope="row">Potato ricer</th><td>Fine, even, fluffy</td><td>Moderate</td><td>Lower when used correctly</td><td>Light mash</td></tr>
+        <tr><th scope="row">Manual masher</th><td>Can retain small lumps</td><td>Higher</td><td>Depends on technique</td><td>Rustic mash</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Blade vs butterfly whisk</h3>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th scope="col">Attachment</th><th scope="col">Role in mash</th><th scope="col">Limit</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Mixing knife</th><td>Cooks and moves potatoes during the cooking stage</td><td>Keeps cutting whenever the machine runs</td></tr>
+        <tr><th scope="row">Butterfly whisk</th><td>Gentle finishing stage in some recipes</td><td>Never above speed 4 (TM6 manual); attach correctly first</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Variations and swaps</h3>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th scope="col">Variation</th><th scope="col">Replace or add</th><th scope="col">Expected change</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Dairy-free</th><td>Unsweetened plant milk and olive oil</td><td>Less traditional dairy flavour</td></tr>
+        <tr><th scope="row">Vegan</th><td>Plant milk and suitable vegan butter</td><td>Dairy-free alternative</td></tr>
+        <tr><th scope="row">Lighter</th><td>Reduce butter; adjust liquid carefully</td><td>Less richness</td></tr>
+        <tr><th scope="row">Cheesy</th><td>Grated cheese added after mashing</td><td>More savoury richness</td></tr>
+        <tr><th scope="row">Garlic</th><td>Prepared roasted garlic</td><td>More pronounced flavour</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="storage">
+  <h2>Storage and reheating</h2>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th scope="col">Stage</th><th scope="col">Temperature</th><th scope="col">Guidance</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Cool-down</th><td>&mdash;</td><td>Refrigerate within 2 hours, in shallow containers</td></tr>
+        <tr><th scope="row">Refrigerator</th><td>40&deg;F (4&deg;C) or below</td><td>3&ndash;4 days</td></tr>
+        <tr><th scope="row">Freezer</th><td>0&deg;F (-18&deg;C) or below</td><td>Longer storage; quality may decline over time. Freeze in individual portions in airtight containers.</td></tr>
+        <tr><th scope="row">Reheating</th><td>165&deg;F (74&deg;C) internal</td><td>Use a saucepan or microwave, stir gently, add a little warm milk or butter if stiff. Do not reprocess at high speed.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">No mash-specific freezer-duration or post-thaw texture data is available, so no best-quality freezing period is given.</p>
+</section>
+
+</main>
+
+<footer>
+  Settings and temperatures are published recipe and food-safety guidance; rows marked &ldquo;Added&rdquo; are general classification. Check your appliance manual before relying on any setting.
+</footer>
+
+</div>
+
+<script>
+(function () {
+  var table = document.getElementById('varieties-table');
+  var tbody = table.tBodies[0];
+  var rows = Array.prototype.slice.call(tbody.rows);
+  var q = document.getElementById('q');
+  var fRegion = document.getElementById('f-region');
+  var fType = document.getElementById('f-type');
+  var fFit = document.getElementById('f-fit');
+  var fBasis = document.getElementById('f-basis');
+  var count = document.getElementById('count');
+
+  function apply() {
+    var s = q.value.trim().toLowerCase();
+    var shown = 0;
+    rows.forEach(function (r) {
+      var d = r.dataset;
+      var ok =
+        (!fRegion.value || d.region.split(',').indexOf(fRegion.value) > -1) &&
+        (!fType.value || d.type === fType.value) &&
+        (!fFit.value || d.fit === fFit.value) &&
+        (!fBasis.value || d.basis === fBasis.value) &&
+        (!s || r.textContent.toLowerCase().indexOf(s) > -1);
+      r.hidden = !ok;
+      if (ok) shown++;
+    });
+    count.textContent = 'Showing ' + shown + ' of ' + rows.length + ' varieties';
+  }
+
+  [q, fRegion, fType, fFit, fBasis].forEach(function (el) {
+    el.addEventListener('input', apply);
+    el.addEventListener('change', apply);
+  });
+
+  document.getElementById('reset').addEventListener('click', function () {
+    q.value = '';
+    fRegion.value = fType.value = fFit.value = fBasis.value = '';
+    apply();
+  });
+
+  function cellKey(r, i) {
+    var c = r.cells[i];
+    return (c.dataset.v || c.textContent).trim().toLowerCase();
+  }
+
+  var heads = table.tHead.rows[0].cells;
+  var current = { col: -1, asc: true };
+  Array.prototype.forEach.call(heads, function (th, i) {
+    var btn = th.querySelector('button');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var asc = current.col === i ? !current.asc : true;
+      current = { col: i, asc: asc };
+      rows.sort(function (a, b) {
+        var x = cellKey(a, i), y = cellKey(b, i);
+        return (x < y ? -1 : x > y ? 1 : 0) * (asc ? 1 : -1);
+      });
+      rows.forEach(function (r) { tbody.appendChild(r); });
+      Array.prototype.forEach.call(heads, function (h) { h.removeAttribute('aria-sort'); });
+      th.setAttribute('aria-sort', asc ? 'ascending' : 'descending');
+    });
+  });
+
+  apply();
+
+  var fixQ = document.getElementById('fix-q');
+  var fixRows = Array.prototype.slice.call(document.getElementById('fixes-table').tBodies[0].rows);
+  var fixCount = document.getElementById('fix-count');
+  fixQ.addEventListener('input', function () {
+    var s = fixQ.value.trim().toLowerCase();
+    var shown = 0;
+    fixRows.forEach(function (r) {
+      var ok = !s || r.textContent.toLowerCase().indexOf(s) > -1;
+      r.hidden = !ok;
+      if (ok) shown++;
+    });
+    fixCount.textContent = s ? 'Showing ' + shown + ' of ' + fixRows.length + ' symptoms' : '';
+  });
+})();
+</script>
+</body>
+</html>
